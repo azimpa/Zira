@@ -1,8 +1,8 @@
 const initialState = {
     user: null,
-    isAuthenticated: false,
-    isAdmin: false,
-    isInstrucutor: false,
+    is_authenticated: false,
+    is_admin: false,
+    is_instructor: false,
     error: null,
 };
 
@@ -12,9 +12,9 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload,
-                isAuthenticated: true,
-                isAdmin: action.payload.is_superuser,
-                isInstrucutor: action.payload.is_instructor,
+                is_authenticated: true,
+                is_admin: action.payload.is_superuser,
+                is_instructor: action.payload.is_instructor,
                 error: null,
             };
 
@@ -22,9 +22,9 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: null,
-                isAuthenticated: false,
-                isAdmin: false,
-                isInstrucutor: false,
+                is_authenticated: false,
+                is_admin: false,
+                is_instructor: false,
                 error: action.payload,
             };
 
@@ -33,9 +33,9 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: null,
-                isAuthenticated: false,
-                isAdmin: false,
-                isInstrucutor: false,
+                is_authenticated: false,
+                is_admin: false,
+                is_instructor: false,
                 error: null,
             };
 

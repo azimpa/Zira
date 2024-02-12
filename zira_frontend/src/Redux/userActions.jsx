@@ -6,8 +6,7 @@ export const fetchUser = (userId) => async (dispatch) => {
 
         if (userId) {
             const response = await axios.get(
-                `${import.meta.env.VITE_APP_BASE_URL}users/${userId}/`
-                // `${import.meta.env.VITE_APP_BASE_URL}/admins/api/edit/${userId}/`
+                `${import.meta.env.VITE_APP_BASE_URL}/users/userdetail/${userId}/`
             );
 
             dispatch({ type: "FETCH_USER_SUCCESS", payload: response.data });
@@ -16,7 +15,6 @@ export const fetchUser = (userId) => async (dispatch) => {
         }
     } catch (error) {
         console.log("Fetching user error", error);
-
         dispatch({ type: "FETCH_USER_FAILURE", payload: error.message || "Unknown error" });
     }
 };

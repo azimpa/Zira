@@ -6,7 +6,6 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import {
   Box,
   Heading,
-  Text,
   Input,
   Stack,
   FormControl,
@@ -14,25 +13,22 @@ import {
   InputRightElement,
   IconButton,
   Button,
-  Link,
-  Container
 } from '@chakra-ui/react';
 import axios from 'axios';
 
-const LoginPage = () => {
+const AdminLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleTogglePassword = () => {
-    setShowPassword(!showPassword);
-  };
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -52,16 +48,16 @@ const LoginPage = () => {
         `${import.meta.env.VITE_APP_BASE_URL}/users/login`,
         formData
       );
-      console.log("userId:",response.data.user.id)
-      const userid = response.data.user.id;
-      dispatch(fetchUser(userid));
-      console.log('User login success', response.data);
+
+      const userId = response.data.user.id;
+      dispatch(fetchUser(userId));
+      console.log('Admin login success', response.data);
       localStorage.setItem('access', response.data.access);
       localStorage.setItem('refresh', response.data.refresh);
-      console.log(response.data);
-      navigate('/');
+      
+      navigate('/adminhome');
     } catch (error) {
-      setError('Invalid email or password. Please try again.');
+      setError('Invalid Admin email or password. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -72,21 +68,18 @@ const LoginPage = () => {
       maxW="md"
       mx="auto"
       mt={20}
-      p={8}
+      p={10}
       borderWidth={1}
       borderRadius={8}
       boxShadow="lg"
       bg="transparent"
     >
-      <Heading fontSize="3xl" fontWeight="bold" color="teal.500" textAlign="center" mb={4}>
-        Log In
+      <Heading fontSize="3xl" fontWeight="bold" color="teal.500" textAlign="center" mb={6}>
+        Admin Login
       </Heading>
-      <Text fontSize="md" color="gray.600" textAlign="center" mb={6}>
-        Welcome back! Log in to your account.
-      </Text>
 
       <form onSubmit={handleSubmit}>
-        <Stack spacing={4}>
+        <Stack spacing={6}>
           <FormControl>
             <Input
               type="email"
@@ -94,8 +87,8 @@ const LoginPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="Email Address"
-              borderRadius="full"
               variant="filled"
+              borderRadius="full"
             />
           </FormControl>
 
@@ -107,8 +100,8 @@ const LoginPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="Password"
-                borderRadius="full"
                 variant="filled"
+                borderRadius="full"
               />
               <InputRightElement>
                 <IconButton
@@ -123,25 +116,20 @@ const LoginPage = () => {
 
           <Button
             type="submit"
-            colorScheme="teal"
-            size="md"
+            color="white"
+            bg="teal.500"
+            size="lg"
             width="100%"
             isLoading={loading}
             borderRadius="full"
+            _hover={{ bg: 'teal.600' }}
           >
             {loading ? 'Logging In...' : 'Login'}
           </Button>
-
-          <Text textAlign="center" mt={2} fontSize="sm" fontFamily="cursive" color="teal.500">
-            Don't have an account?{' '}
-            <Link href="/register" color="teal.500">
-              Sign Up
-            </Link>
-          </Text>
         </Stack>
       </form>
     </Box>
   );
 };
 
-export default LoginPage;
+export default AdminLogin;

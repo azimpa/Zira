@@ -1,12 +1,13 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
-from users.models import CustomUser
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
+from django.db import IntegrityError
 from django.contrib.auth import login, authenticate
-from .serializers import UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from .serializers import UserSerializer
+from users.models import CustomUser
 
 
 class UserRegistrationView(generics.CreateAPIView):
@@ -15,17 +16,23 @@ class UserRegistrationView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         try:
-            user = serializer.save()
-            refresh = RefreshToken.for_user(user)
+            serializer.save()
             content = {
-                "Message": "User Registered Successfully",
+                "status": "success",
+                "message": "User registered successfully",
                 "user": serializer.data,
-                "refresh": str(refresh),
-                "access": str(refresh.access_token),
             }
             return Response(content, status=status.HTTP_201_CREATED)
+        except IntegrityError as e:
+            return Response(
+                {"status": "error", "error": "User with this email already exists"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                {"status": "error", "error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
 
 @permission_classes([AllowAny])
@@ -42,13 +49,25 @@ class UserLoginView(APIView):
                 refresh = RefreshToken.for_user(user)
                 serializer = UserSerializer(user)
                 content = {
-                    "Message": "Login Successful",
+                    "status": "success",
+                    "message": "Login successful",
                     "user": serializer.data,
                     "refresh": str(refresh),
                     "access": str(refresh.access_token),
                 }
                 return Response(content, status=status.HTTP_200_OK)
             else:
-                return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED,)
+                return Response(
+                    {"status": "error", "error": "Authentication failed"},
+                    status=status.HTTP_401_UNAUTHORIZED,
+                )
         else:
-            return Response({"error": "Both Email and Password are required"}, status=status.HTTP_400_BAD_REQUEST,)
+            return Response(
+                {"status": "error", "error": "Both email and password are required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+class UserDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
