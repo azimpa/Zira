@@ -4,7 +4,8 @@ virtualenv/
 db.sqlite3
 
 #React
-frontend/.env
+zira_frontend/.env
+
 # Logs
 logs
 *.log
