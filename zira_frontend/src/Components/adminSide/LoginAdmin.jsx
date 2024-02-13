@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 
-const AdminLogin = () => {
+const LoginAdmin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -55,7 +55,7 @@ const AdminLogin = () => {
       localStorage.setItem('access', response.data.access);
       localStorage.setItem('refresh', response.data.refresh);
       
-      navigate('/adminhome');
+      navigate('/homeadmin');
     } catch (error) {
       setError('Invalid Admin email or password. Please try again.');
     } finally {
@@ -132,4 +132,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default LoginAdmin;

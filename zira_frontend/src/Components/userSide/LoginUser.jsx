@@ -14,11 +14,12 @@ import {
   InputRightElement,
   IconButton,
   Button,
-  Link
+  Link,
+  Container
 } from '@chakra-ui/react';
 import axios from 'axios';
 
-const InstructorLogin = () => {
+const LoginUser = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -51,13 +52,14 @@ const InstructorLogin = () => {
         `${import.meta.env.VITE_APP_BASE_URL}/users/login`,
         formData
       );
+      console.log("userId:",response.data.user.id)
       const userid = response.data.user.id;
       dispatch(fetchUser(userid));
-      console.log('Instructor login success', response.data);
+      console.log('User login success', response.data);
       localStorage.setItem('access', response.data.access);
       localStorage.setItem('refresh', response.data.refresh);
       console.log(response.data);
-      navigate('/homeinstructor');
+      navigate('/');
     } catch (error) {
       setError('Invalid email or password. Please try again.');
     } finally {
@@ -91,9 +93,9 @@ const InstructorLogin = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              variant="filled"
               placeholder="Email Address"
               borderRadius="full"
+              variant="filled"
             />
           </FormControl>
 
@@ -104,9 +106,9 @@ const InstructorLogin = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                variant="filled"
                 placeholder="Password"
                 borderRadius="full"
+                variant="filled"
               />
               <InputRightElement>
                 <IconButton
@@ -132,7 +134,7 @@ const InstructorLogin = () => {
 
           <Text textAlign="center" mt={2} fontSize="sm" fontFamily="cursive" color="teal.500">
             Don't have an account?{' '}
-            <Link href="/registerinstructor" color="teal.500">
+            <Link href="/register" color="teal.500">
               Sign Up
             </Link>
           </Text>
@@ -142,4 +144,4 @@ const InstructorLogin = () => {
   );
 };
 
-export default InstructorLogin
+export default LoginUser;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from "axios";
+import axios from 'axios';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -14,19 +14,13 @@ import {
   IconButton,
   Button,
   Link,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
-const InstructorRegister = () => {
+const SignupUser = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [formError, setFormError] = useState([]);
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -35,6 +29,13 @@ const InstructorRegister = () => {
   const handleToggleConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [formError, setFormError] = useState([]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -45,29 +46,28 @@ const InstructorRegister = () => {
       email: email,
       password: password,
       contact_number: contactNumber,
-      is_instructor: true,
     };
-
+    
     try {
-      console.log("API URL:", `${import.meta.env.VITE_APP_BASE_URL}/users/register`);
-      console.log("Form Data:", formData);
+      console.log('API URL:', `${import.meta.env.VITE_APP_BASE_URL}/users/register`);
+      console.log('Form Data:', formData);
 
       const response = await axios.post(
         `${import.meta.env.VITE_APP_BASE_URL}/users/register`,
         formData
       );
-      console.log("Instructor Registered Successfully");
-      navigate("/logininstructor");
+      console.log('User Registered Successfully');
+      navigate('/login');
     } catch (error) {
-      console.error("Registration Failed:", error);
+      console.error('Registration Failed:', error);
 
       if (error.response && error.response.data && error.response.data.error) {
         const errorMessage = error.response.data.error;
-        console.log("Backend error:", errorMessage);
+        console.log('Backend error:', errorMessage);
         setFormError([errorMessage]);
       } else {
-        console.error("Unexpected error occurred:", error);
-        console.log("Full error response from backend:", error.response.data);
+        console.error('Unexpected error occurred:', error);
+        console.log('Full error response from backend:', error.response.data);
         setFormError(error.response.data);
       }
     }
@@ -75,7 +75,7 @@ const InstructorRegister = () => {
 
   return (
     <Box
-      maxW="md"
+      maxW="sm"
       mx="auto"
       mt={10}
       p={8}
@@ -84,11 +84,11 @@ const InstructorRegister = () => {
       boxShadow="lg"
       bg="transparent"
     >
-      <Heading fontSize="2xl" fontWeight="bold" color="teal.500" textAlign="center" mb={4}>
+      <Heading fontSize="3xl" fontWeight="bold" color="teal.500" textAlign="center" mb={4}>
         Sign Up
       </Heading>
-      <Text fontSize="sm" color="gray.600" textAlign="center" mb={6}>
-        Begin your journey as an instructor by creating a new account. Join our e-learning platform to share your expertise and inspire learners.
+      <Text fontSize="md" color="gray.600" textAlign="center" mb={6}>
+        Create a new account to get started
       </Text>
 
       <form onSubmit={handleSubmit}>
@@ -99,8 +99,8 @@ const InstructorRegister = () => {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               required
-              placeholder="Full Name"
               variant="filled"
+              placeholder="Full Name"
               borderRadius="full"
             />
           </FormControl>
@@ -111,8 +111,8 @@ const InstructorRegister = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="Email Address"
               variant="filled"
+              placeholder="Email Address"
               borderRadius="full"
             />
           </FormControl>
@@ -123,8 +123,8 @@ const InstructorRegister = () => {
               value={contactNumber}
               onChange={(e) => setContactNumber(e.target.value)}
               required
-              placeholder="Contact Number"
               variant="filled"
+              placeholder="Contact Number"
               borderRadius="full"
             />
           </FormControl>
@@ -132,12 +132,12 @@ const InstructorRegister = () => {
           <FormControl>
             <InputGroup>
               <Input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="Password"
                 variant="filled"
+                placeholder="Password"
                 borderRadius="full"
               />
               <InputRightElement>
@@ -154,18 +154,18 @@ const InstructorRegister = () => {
           <FormControl>
             <InputGroup>
               <Input
-                type={showConfirmPassword ? "text" : "password"}
+                type={showConfirmPassword ? 'text' : 'password'}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
-                placeholder='Confirm Password'
                 variant="filled"
+                placeholder="Confirm Password"
                 borderRadius="full"
               />
               <InputRightElement>
                 <IconButton
                   variant="ghost"
-                  colorScheme='teal'
+                  colorScheme="teal"
                   icon={showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                   onClick={handleToggleConfirmPassword}
                 />
@@ -176,15 +176,9 @@ const InstructorRegister = () => {
           <Button type="submit" colorScheme="teal" size="md" width="100%" borderRadius="full">
             Create Account
           </Button>
-          <Text
-            textAlign="center"
-            mt={2}
-            fontSize="sm"
-            fontFamily="cursive"
-            color="teal.500"
-          >
+          <Text textAlign="center" mt={2} fontSize="sm" fontFamily="cursive" color="teal.500">
             Already have an account?{' '}
-            <Link color="teal.500" onClick={() => navigate("/logininstructor")}>
+            <Link onClick={() => navigate('/login')} color="teal.500">
               Login
             </Link>
           </Text>
@@ -194,4 +188,4 @@ const InstructorRegister = () => {
   );
 };
 
-export default InstructorRegister;
+export default SignupUser;

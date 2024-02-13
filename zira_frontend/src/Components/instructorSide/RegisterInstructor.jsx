@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from "axios";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -14,13 +14,19 @@ import {
   IconButton,
   Button,
   Link,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-const SignupPage = () => {
+const RegisterInstructor = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [formError, setFormError] = useState([]);
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -29,13 +35,6 @@ const SignupPage = () => {
   const handleToggleConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
-
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [formError, setFormError] = useState([]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,28 +45,29 @@ const SignupPage = () => {
       email: email,
       password: password,
       contact_number: contactNumber,
+      is_instructor: true,
     };
-    
+
     try {
-      console.log('API URL:', `${import.meta.env.VITE_APP_BASE_URL}/users/register`);
-      console.log('Form Data:', formData);
+      console.log("API URL:", `${import.meta.env.VITE_APP_BASE_URL}/users/register`);
+      console.log("Form Data:", formData);
 
       const response = await axios.post(
         `${import.meta.env.VITE_APP_BASE_URL}/users/register`,
         formData
       );
-      console.log('User Registered Successfully');
-      navigate('/login');
+      console.log("Instructor Registered Successfully");
+      navigate("/logininstructor");
     } catch (error) {
-      console.error('Registration Failed:', error);
+      console.error("Registration Failed:", error);
 
       if (error.response && error.response.data && error.response.data.error) {
         const errorMessage = error.response.data.error;
-        console.log('Backend error:', errorMessage);
+        console.log("Backend error:", errorMessage);
         setFormError([errorMessage]);
       } else {
-        console.error('Unexpected error occurred:', error);
-        console.log('Full error response from backend:', error.response.data);
+        console.error("Unexpected error occurred:", error);
+        console.log("Full error response from backend:", error.response.data);
         setFormError(error.response.data);
       }
     }
@@ -75,7 +75,7 @@ const SignupPage = () => {
 
   return (
     <Box
-      maxW="sm"
+      maxW="md"
       mx="auto"
       mt={10}
       p={8}
@@ -84,11 +84,11 @@ const SignupPage = () => {
       boxShadow="lg"
       bg="transparent"
     >
-      <Heading fontSize="3xl" fontWeight="bold" color="teal.500" textAlign="center" mb={4}>
+      <Heading fontSize="2xl" fontWeight="bold" color="teal.500" textAlign="center" mb={4}>
         Sign Up
       </Heading>
-      <Text fontSize="md" color="gray.600" textAlign="center" mb={6}>
-        Create a new account to get started
+      <Text fontSize="sm" color="gray.600" textAlign="center" mb={6}>
+        Begin your journey as an instructor by creating a new account. Join our e-learning platform to share your expertise and inspire learners.
       </Text>
 
       <form onSubmit={handleSubmit}>
@@ -99,8 +99,8 @@ const SignupPage = () => {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               required
-              variant="filled"
               placeholder="Full Name"
+              variant="filled"
               borderRadius="full"
             />
           </FormControl>
@@ -111,8 +111,8 @@ const SignupPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              variant="filled"
               placeholder="Email Address"
+              variant="filled"
               borderRadius="full"
             />
           </FormControl>
@@ -123,8 +123,8 @@ const SignupPage = () => {
               value={contactNumber}
               onChange={(e) => setContactNumber(e.target.value)}
               required
-              variant="filled"
               placeholder="Contact Number"
+              variant="filled"
               borderRadius="full"
             />
           </FormControl>
@@ -132,12 +132,12 @@ const SignupPage = () => {
           <FormControl>
             <InputGroup>
               <Input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                variant="filled"
                 placeholder="Password"
+                variant="filled"
                 borderRadius="full"
               />
               <InputRightElement>
@@ -154,18 +154,18 @@ const SignupPage = () => {
           <FormControl>
             <InputGroup>
               <Input
-                type={showConfirmPassword ? 'text' : 'password'}
+                type={showConfirmPassword ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
+                placeholder='Confirm Password'
                 variant="filled"
-                placeholder="Confirm Password"
                 borderRadius="full"
               />
               <InputRightElement>
                 <IconButton
                   variant="ghost"
-                  colorScheme="teal"
+                  colorScheme='teal'
                   icon={showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                   onClick={handleToggleConfirmPassword}
                 />
@@ -176,9 +176,15 @@ const SignupPage = () => {
           <Button type="submit" colorScheme="teal" size="md" width="100%" borderRadius="full">
             Create Account
           </Button>
-          <Text textAlign="center" mt={2} fontSize="sm" fontFamily="cursive" color="teal.500">
+          <Text
+            textAlign="center"
+            mt={2}
+            fontSize="sm"
+            fontFamily="cursive"
+            color="teal.500"
+          >
             Already have an account?{' '}
-            <Link onClick={() => navigate('/login')} color="teal.500">
+            <Link color="teal.500" onClick={() => navigate("/logininstructor")}>
               Login
             </Link>
           </Text>
@@ -188,4 +194,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default RegisterInstructor;

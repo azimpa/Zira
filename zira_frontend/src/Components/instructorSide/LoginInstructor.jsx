@@ -14,12 +14,11 @@ import {
   InputRightElement,
   IconButton,
   Button,
-  Link,
-  Container
+  Link
 } from '@chakra-ui/react';
 import axios from 'axios';
 
-const LoginPage = () => {
+const LoginInstructor = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -52,14 +51,13 @@ const LoginPage = () => {
         `${import.meta.env.VITE_APP_BASE_URL}/users/login`,
         formData
       );
-      console.log("userId:",response.data.user.id)
       const userid = response.data.user.id;
       dispatch(fetchUser(userid));
-      console.log('User login success', response.data);
+      console.log('Instructor login success', response.data);
       localStorage.setItem('access', response.data.access);
       localStorage.setItem('refresh', response.data.refresh);
       console.log(response.data);
-      navigate('/');
+      navigate('/homeinstructor');
     } catch (error) {
       setError('Invalid email or password. Please try again.');
     } finally {
@@ -93,9 +91,9 @@ const LoginPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              variant="filled"
               placeholder="Email Address"
               borderRadius="full"
-              variant="filled"
             />
           </FormControl>
 
@@ -106,9 +104,9 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                variant="filled"
                 placeholder="Password"
                 borderRadius="full"
-                variant="filled"
               />
               <InputRightElement>
                 <IconButton
@@ -134,7 +132,7 @@ const LoginPage = () => {
 
           <Text textAlign="center" mt={2} fontSize="sm" fontFamily="cursive" color="teal.500">
             Don't have an account?{' '}
-            <Link href="/register" color="teal.500">
+            <Link href="/registerinstructor" color="teal.500">
               Sign Up
             </Link>
           </Text>
@@ -144,4 +142,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginInstructor
