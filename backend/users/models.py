@@ -17,6 +17,7 @@ class CustomUserManager(BaseUserManager):
 
     def create_instructor(self, email, password, **extra_fields):
         extra_fields.setdefault("is_instructor", True)
+        extra_fields.setdefault("is_approved", False)
         return self.create_user(email, password, **extra_fields)
 
 
@@ -30,6 +31,7 @@ class CustomUser(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_instructor = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
 
     objects = CustomUserManager()
 
