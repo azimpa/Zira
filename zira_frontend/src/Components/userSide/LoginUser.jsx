@@ -52,14 +52,15 @@ const LoginUser = () => {
         `${import.meta.env.VITE_APP_BASE_URL}/users/login`,
         formData
       );
-      console.log("userId:",response.data.user.id)
+
       const userid = response.data.user.id;
-      dispatch(fetchUser(userid));
-      console.log('User login success', response.data);
-      localStorage.setItem('access', response.data.access);
-      localStorage.setItem('refresh', response.data.refresh);
-      console.log(response.data);
-      navigate('/');
+      dispatch(fetchUser(userid)).then(() => {
+        localStorage.setItem('access', response.data.access);
+        localStorage.setItem('refresh', response.data.refresh);
+        console.log('User login success', response.data);
+        navigate('/');
+      });
+        
     } catch (error) {
       setError('Invalid email or password. Please try again.');
     } finally {

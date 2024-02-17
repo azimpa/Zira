@@ -6,7 +6,7 @@ const PrivateRoute = ({ children }) => {
     const user = useSelector((state) => state.user);
     const isAdmin = user.is_admin;
 
-    return user && isAdmin ? <>{children}</> : <Navigate to="/adminlogin" />;
+    return user && isAdmin ? <>{children}</> : <Navigate to="/loginadmin" />;
 }
 
 export default PrivateRoute;
@@ -20,7 +20,7 @@ const UserRoute = ({ children }) => {
 const InstructorRoute = ({ children }) => {
     const user = useSelector((state) => state.user)
     const isInstrucutor = user.is_instructor
-    return user && isInstrucutor ? <>{children}</> : <Navigate to="/instructorlogin" />;
+    return user && isInstrucutor ? <>{children}</> : <Navigate to="/logininstructor" />;
 }
 
 export { UserRoute, InstructorRoute };

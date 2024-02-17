@@ -51,13 +51,15 @@ const LoginInstructor = () => {
         `${import.meta.env.VITE_APP_BASE_URL}/users/login`,
         formData
       );
+
       const userid = response.data.user.id;
-      dispatch(fetchUser(userid));
-      console.log('Instructor login success', response.data);
-      localStorage.setItem('access', response.data.access);
-      localStorage.setItem('refresh', response.data.refresh);
-      console.log(response.data);
-      navigate('/homeinstructor');
+      dispatch(fetchUser(userid)).then(() => {
+        localStorage.setItem('access', response.data.access);
+        localStorage.setItem('refresh', response.data.refresh);
+        console.log('Instructor login success:', response.data);
+        navigate('/homeinstructor');
+      });
+
     } catch (error) {
       setError('Invalid email or password. Please try again.');
     } finally {

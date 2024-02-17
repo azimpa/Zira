@@ -13,6 +13,8 @@ import HomeInstructor from './Components/instructorSide/HomeInstructor';
 import HomeUser from './Components/userSide/HomeUser';
 import SignupUser from './Components/userSide/SignupUser';
 import LoginUser from './Components/userSide/LoginUser';
+import UsersList from './Components/adminSide/UsersList';
+
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
             <Route path='/login' element={<LoginUser />} />
             <Route path='/loginadmin' element={<LoginAdmin />} />
             <Route path='/homeadmin' element={<PrivateRoute><HomeAdmin /></PrivateRoute>} />
+            <Route path='/usersadmin' element={<PrivateRoute><UsersList /></PrivateRoute>} />
             <Route path='/registerinstructor' element={<RegisterInstructor />} />
             <Route path='/logininstructor' element={<LoginInstructor />} />
             <Route path='/homeinstructor' element={<InstructorRoute><HomeInstructor /></InstructorRoute>} />

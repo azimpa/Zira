@@ -50,12 +50,13 @@ const LoginAdmin = () => {
       );
 
       const userId = response.data.user.id;
-      dispatch(fetchUser(userId));
-      console.log('Admin login success', response.data);
-      localStorage.setItem('access', response.data.access);
-      localStorage.setItem('refresh', response.data.refresh);
-      
-      navigate('/homeadmin');
+      dispatch(fetchUser(userId)).then(() => {
+        localStorage.setItem('access', response.data.access);
+        localStorage.setItem('refresh', response.data.refresh);
+        console.log('Admin login success', response.data)
+        navigate('/homeadmin');
+      });
+
     } catch (error) {
       setError('Invalid Admin email or password. Please try again.');
     } finally {
