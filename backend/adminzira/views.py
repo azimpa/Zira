@@ -2,9 +2,10 @@ from rest_framework import generics, status
 from django.db.models import Q
 from rest_framework.generics import ListAPIView
 from users.models import CustomUser
+from instructor.models import Course
 from rest_framework.response import Response
 from users.serializers import UserSerializer
-
+from instructor.serializers import CourseSerializer
 # from django.contrib.auth import authenticate
 
 
@@ -37,6 +38,18 @@ class ToggleInstructorStatus(generics.UpdateAPIView):
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
         instance.is_approved = not instance.is_approved
+        instance.save()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+
+class ToggleCourseStatus(generics.UpdateAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.is_active = not instance.is_active
         instance.save()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)

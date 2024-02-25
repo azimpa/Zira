@@ -56,11 +56,11 @@ const SideBar = () => {
             </Text>
           </Flex>
           <Flex direction="column" as="nav" fontSize="md" aria-label="Main Navigation">
-            <NavItem icon={AiOutlineHome}>Dashboard</NavItem>
-            <NavItem icon={AiOutlineTeam}>Users</NavItem>
-            <NavItem icon={FaPeopleGroup}>Instructors</NavItem>
+            <NavItem icon={AiOutlineHome} path="/homeadmin">Dashboard</NavItem>
+            <NavItem icon={AiOutlineTeam} path="/usersadmin">Users</NavItem>
+            <NavItem icon={FaPeopleGroup} path="/instructorsadmin">Instructors</NavItem>
             <NavItem icon={BiCategory}>Categories</NavItem>
-            <NavItem icon={FaBookOpen}>Courses</NavItem>
+            <NavItem icon={FaBookOpen} path="/coursesadmin">Courses</NavItem>
             <NavItem icon={CiMemoPad}>Banner</NavItem>
             <NavItem icon={BsCalendarCheck}>Subscriptions</NavItem>
           </Flex>
@@ -96,7 +96,13 @@ const SideBar = () => {
 
 const NavItem = (props) => {
   const color = useColorModeValue("gray.600", "gray.300");
-  const { icon, children } = props;
+  const { icon, children, path } = props;
+
+  const navigate = useNavigate();
+
+  const handleItemClick = () => {
+    navigate(path);
+  };
 
   return (
     <Flex
@@ -112,6 +118,7 @@ const NavItem = (props) => {
         bg: useColorModeValue("lightyellow"),
         color: useColorModeValue("gray.900", "gray.200"),
       }}
+      onClick={handleItemClick}
     >
       {icon && (
         <Icon

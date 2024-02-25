@@ -11,10 +11,12 @@ import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 import HomeAdmin from './Components/adminSide/HomeAdmin';
 import UsersList from './Components/adminSide/UsersList';
 import InstructorsList from './Components/adminSide/InstructorsList';
+import CourseAdmin from './Components/adminSide/CourseAdmin';
 import RegisterInstructor from './Components/instructorSide/RegisterInstructor';
 import LoginInstructor from './Components/instructorSide/LoginInstructor';
 import { InstructorRoute } from './Components/PrivateRoute/PrivateRoute';
 import HomeInstructor from './Components/instructorSide/HomeInstructor';
+import CourseInstructor from './Components/instructorSide/CourseInstructor';
 
 
 
@@ -31,9 +33,11 @@ function App() {
             <Route path='/homeadmin' element={<PrivateRoute><HomeAdmin /></PrivateRoute>} />
             <Route path='/usersadmin' element={<PrivateRoute><UsersList /></PrivateRoute>} />
             <Route path='/instructorsadmin' element={<PrivateRoute><InstructorsList /></PrivateRoute>} />
+            <Route path='/coursesadmin' element={<PrivateRoute><CourseAdmin /></PrivateRoute>} />
             <Route path='/registerinstructor' element={<RegisterInstructor />} />
             <Route path='/logininstructor' element={<LoginInstructor />} />
             <Route path='/homeinstructor' element={<InstructorRoute><HomeInstructor /></InstructorRoute>} />
+            <Route path='/courseinstructor' element={<InstructorRoute><CourseInstructor/></InstructorRoute>}/>
           </Routes>
         </BrowserRouter>
       </Provider>

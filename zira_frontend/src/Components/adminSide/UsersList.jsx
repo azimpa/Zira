@@ -25,6 +25,7 @@ export default function UsersList() {
         `${import.meta.env.VITE_APP_BASE_URL}/adminzira/userlist`
       );
       setUsers(response.data);
+      console.log(response.data, "users")
     } catch (error) {
       console.error('Error fetching user', error);
     }
@@ -53,23 +54,23 @@ export default function UsersList() {
   const sortedUsers = [...users].sort((a, b) => a.id - b.id);
 
   return (
-    <Flex minH="100vh">
+    <Box as="section" bg="transparent" minH="100vh">
       {/* SideBar */}
       <SideBar />
 
-      <Box w="100%" bg="transparent">
-        <Flex
-          as="header"
-          align="center"
-          justifyContent="space-between"
-          boxShadow="lg"
-          h="16"
-          bg="white"
-          mb="6"
-          w="100%"
-        >
-          {/* Header Content Goes Here */}
-        </Flex>
+      <Flex
+        as="header"
+        align="center"
+        w="full"
+        px="4"
+        d={{ base: "flex", md: "none" }}
+        bg="white"
+        justifyContent={{ base: "space-between", md: "flex-end" }}
+        boxShadow="lg"
+        h="12"
+        mb="6"
+      >
+      </Flex>
 
         <Box p="3">
           <Box
@@ -126,6 +127,5 @@ export default function UsersList() {
           </Box>
         </Box>
       </Box>
-    </Flex>
   );
 }

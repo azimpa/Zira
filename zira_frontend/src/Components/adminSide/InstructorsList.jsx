@@ -55,79 +55,78 @@ export default function InstructorsList() {
   const sortedInstructors = [...instructors].sort((a, b) => a.id - b.id);
 
   return (
-    <Flex minH="100vh">
+    <Box as="section" bg="transparent" minH="100vh">
       {/* SideBar */}
       <SideBar />
 
-      <Box w="100%" bg="transparent">
-        <Flex
-          as="header"
-          align="center"
-          justifyContent="space-between"
-          boxShadow="lg"
-          h="16"
+      <Flex
+        as="header"
+        align="center"
+        w="full"
+        px="4"
+        d={{ base: "flex", md: "none" }}
+        bg="white"
+        justifyContent={{ base: "space-between", md: "flex-end" }}
+        boxShadow="lg"
+        h="12"
+        mb="6"
+      >
+      </Flex>
+
+      <Box p="3">
+        <Box
           bg="white"
-          mb="6"
-          w="100%"
+          borderRadius="lg"
+          p={6}
+          boxShadow="lg"
+          ml={{ base: 0, md: 60 }}
         >
-          {/* Header Content Goes Here */}
-        </Flex>
+          <Stack spacing={6} align="center">
+            <Text
+              textAlign="center"
+              fontSize="3xl"
+              fontWeight="bold"
+              color="teal"
+            >
+              INSTRUCTOR MANAGEMENT
+            </Text>
 
-        <Box p="3">
-          <Box
-            bg="white"
-            borderRadius="lg"
-            p={6}
-            boxShadow="lg"
-            ml={{ base: 0, md: 60 }}
-          >
-            <Stack spacing={6} align="center">
-              <Text
-                textAlign="center"
-                fontSize="3xl"
-                fontWeight="bold"
-                color="teal"
-              >
-                INSTRUCTOR MANAGEMENT
-              </Text>
+            <Table variant="simple" size="md">
+              <Thead>
+                <Tr>
+                  <Th>ID</Th>
+                  <Th>Name</Th>
+                  <Th>Email</Th>
+                  <Th>Phone Number</Th>
+                  <Th>Status</Th>
+                  <Th>Actions</Th>
+                </Tr>
+              </Thead>
 
-              <Table variant="simple" size="md">
-                <Thead>
-                  <Tr>
-                    <Th>ID</Th>
-                    <Th>Name</Th>
-                    <Th>Email</Th>
-                    <Th>Phone Number</Th>
-                    <Th>Status</Th>
-                    <Th>Actions</Th>
+              <Tbody>
+                {sortedInstructors.map((instructor) => (
+                  <Tr key={instructor.id}>
+                    <Td>{instructor.id}</Td>
+                    <Td>{instructor.name}</Td>
+                    <Td>{instructor.email}</Td>
+                    <Td>{instructor.contact_number}</Td>
+                    <Td>{instructor.is_approved ? 'Approved' : 'Unapproved'}</Td>
+                    <Td>
+                      <Button
+                        size="sm"
+                        colorScheme={instructor.is_approved ? 'red' : 'green'}
+                        onClick={() => handleToggleInstructor(instructor.id)}
+                      >
+                        {instructor.is_approved ? 'Refuse' : 'Approve'}
+                      </Button>
+                    </Td>
                   </Tr>
-                </Thead>
-
-                <Tbody>
-                  {sortedInstructors.map((instructor) => (
-                    <Tr key={instructor.id}>
-                      <Td>{instructor.id}</Td>
-                      <Td>{instructor.name}</Td>
-                      <Td>{instructor.email}</Td>
-                      <Td>{instructor.contact_number}</Td>
-                      <Td>{instructor.is_approved ? 'Approved' : 'Unapproved'}</Td>
-                      <Td>
-                        <Button
-                          size="sm"
-                          colorScheme={instructor.is_approved ? 'red' : 'green'}
-                          onClick={() => handleToggleInstructor(instructor.id)}
-                        >
-                          {instructor.is_approved ? 'Refuse' : 'Approve'}
-                        </Button>
-                      </Td>
-                    </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            </Stack>
-          </Box>
+                ))}
+              </Tbody>
+            </Table>
+          </Stack>
         </Box>
       </Box>
-    </Flex>
+    </Box>
   );
 }

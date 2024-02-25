@@ -1,176 +1,110 @@
-import {
-  Box,
-  Flex,
-  HStack,
-  Button,
-  Text,
-  Link,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Stack,
-  Icon,
-  IconButton,
-  useDisclosure,
-  useColorModeValue
-} from "@chakra-ui/react"
-// Here we have used react-icons package for the icons
-import { GiHamburgerMenu } from "react-icons/gi"
-import { AiOutlineClose } from "react-icons/ai"
-import { BiChevronDown } from "react-icons/bi"
-import { RiFlashlightFill } from "react-icons/ri"
+import React from 'react';
+import { Box, Flex, Link, Button, Avatar, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {logoutUser} from '../../Redux/userActions'
 
-const navLinks = [
-  { name: "About", path: "#" },
-  { name: "Features", path: "#" },
-  { name: "Pricing", path: "#" }
-]
+// Main Navbar component
+const Navbar = () => {
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
-const dropdownLinks = [
-  {
-    name: "Blog",
-    path: "#"
-  },
-  {
-    name: "Documentation",
-    path: "#"
-  },
-  {
-    name: "Github Repo",
-    path: "#"
+  const handleLogout = () => {
+    console.log("Logging Out...");
+    localStorage.clear();
+    dispatch(logoutUser());
+    navigate("/");
   }
-]
-
-export default function Navbar() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
-    <Box px={4} bg={useColorModeValue("white", "gray.800")}>
-      <Flex h={16} alignItems="center" justifyContent="space-between" mx="auto">
-        <Icon as={RiFlashlightFill} h={8} w={8} />
-
-        <HStack spacing={8} alignItems="center">
-          <HStack
-            as="nav"
-            spacing={6}
-            d={{ base: "none", md: "flex" }}
-            alignItems="center"
-          >
-            {navLinks.map((link, index) => (
-              <NavLink key={index} {...link} onClose={onClose} />
-            ))}
-
-            {/* Dropdown Menu */}
-            <Menu autoSelect={false} isLazy>
-              {({ isOpen, onClose }) => (
-                <>
-                  <MenuButton _hover={{ color: "blue.400" }}>
-                    <Flex alignItems="center">
-                      <Text>Community</Text>
-                      <Icon
-                        as={BiChevronDown}
-                        h={5}
-                        w={5}
-                        ml={1}
-                        transition="all .25s ease-in-out"
-                        transform={isOpen ? "rotate(180deg)" : ""}
-                      />
-                    </Flex>
-                  </MenuButton>
-                  <MenuList
-                    zIndex={5}
-                    bg={useColorModeValue(
-                      "rgb(255, 255, 255)",
-                      "rgb(26, 32, 44)"
-                    )}
-                    border="none"
-                    boxShadow={useColorModeValue(
-                      "2px 4px 6px 2px rgba(160, 174, 192, 0.6)",
-                      "2px 4px 6px 2px rgba(9, 17, 28, 0.6)"
-                    )}
-                  >
-                    {dropdownLinks.map((link, index) => (
-                      <MenuLink
-                        key={index}
-                        name={link.name}
-                        path={link.path}
-                        onClose={onClose}
-                      />
-                    ))}
-                  </MenuList>
-                </>
-              )}
-            </Menu>
-          </HStack>
-        </HStack>
-
-        <Button
-          colorScheme="blue"
-          size="md"
-          rounded="md"
-          d={{ base: "none", md: "block" }}
+    <Box boxShadow="md" p={4} bg="transparent">
+      <Flex alignItems="center" justifyContent="space-between">
+        <Link
+          href="/"
+          fontSize="3xl"
+          fontWeight="bold"
+          _hover={{ textDecoration: 'none', opacity: 0.8 }}
+          fontFamily="Arial, sans-serif"
+          letterSpacing="0.1em" // Adjust letter spacing
+          lineHeight="1.5"
         >
-          Sign in
-        </Button>
-        <IconButton
-          size="md"
-          icon={isOpen ? <AiOutlineClose /> : <GiHamburgerMenu />}
-          aria-label="Open Menu"
-          d={{ base: "inherit", md: "none" }}
-          onClick={isOpen ? onClose : onOpen}
-        />
+          ZIRA
+        </Link>
+
+        <Flex alignItems="center" fontWeight="bold">
+          <Link
+            href="#"
+            mr={4}
+            _hover={{ textDecoration: 'none', color: 'teal.500' }}
+            fontSize="lg"
+          >
+            HOME
+          </Link>
+          <Link
+            href="#"
+            mr={4}
+            _hover={{ textDecoration: 'none', color: 'teal.500' }}
+            fontSize="lg"
+          >
+            ABOUT
+          </Link>
+          <Link
+            href="#"
+            mr={4}
+            _hover={{ textDecoration: 'none', color: 'teal.500' }}
+            fontSize="lg"
+          >
+            LEARN
+          </Link>
+          <Link href="#" _hover={{ textDecoration: 'none', color: 'teal.500' }} fontSize="lg">
+            CATALOG
+          </Link>
+        </Flex>
+
+        <Flex>
+          {user && user.user && user.user.id ? (
+            <Menu>
+              <MenuButton>
+            <Avatar size="sm" name='User' src=''/>
+            </MenuButton>
+            <MenuList>
+              <MenuItem fontWeight="bold" textAlign="center" justifyContent="center">{user.user.name}</MenuItem>
+              <MenuItem  onClick={() => navigate("/userprofile")} >Go to Profile</MenuItem>
+              <MenuItem>Subscriptions</MenuItem>
+              <MenuItem>Notifications</MenuItem>
+              <MenuItem>Password</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </MenuList>
+            </Menu>
+          ) : (
+            <>
+              <Button
+                variant="outline"
+                colorScheme="teal"
+                mr={3}
+                _hover={{ bg: 'teal.500', color: 'white' }}
+                transition="background-color 0.3s, color 0.3s"
+                borderRadius="full"
+                onClick={() => navigate("/login")}
+              >
+                LOGIN
+              </Button>
+              <Button
+                colorScheme="teal"
+                _hover={{ bg: 'teal.500', color: 'white' }}
+                transition="background-color 0.3s, color 0.3s"
+                borderRadius="full"
+                onClick={() => navigate("/register")}
+              >
+                REGISTER
+              </Button>
+            </>
+          )}
+        </Flex>
       </Flex>
-
-      {/* Mobile Screen Links */}
-      {isOpen ? (
-        <Box pb={4} d={{ base: "inherit", md: "none" }}>
-          <Stack as="nav" spacing={2}>
-            {navLinks.map((link, index) => (
-              <NavLink key={index} {...link} onClose={onClose} />
-            ))}
-            <Text fontWeight="semibold" color="gray.500">
-              Community
-            </Text>
-            <Stack pl={2} spacing={1} mt={"0 !important"}>
-              {dropdownLinks.map((link, index) => (
-                <NavLink key={index} {...link} onClose={onClose} />
-              ))}
-            </Stack>
-          </Stack>
-        </Box>
-      ) : null}
     </Box>
-  )
-}
+  );
+};
 
-const NavLink = ({ name, path, onClose }) => {
-  return (
-    <Link
-      href={path}
-      lineHeight="inherit"
-      _hover={{
-        textDecoration: "none",
-        color: useColorModeValue("blue.500", "blue.200")
-      }}
-      onClick={() => onClose()}
-    >
-      {name}
-    </Link>
-  )
-}
-
-const MenuLink = ({ name, path, onClose }) => {
-  return (
-    <Link href={path} onClick={() => onClose()}>
-      <MenuItem
-        _hover={{
-          color: "blue.400",
-          bg: useColorModeValue("gray.200", "gray.700")
-        }}
-      >
-        <Text>{name}</Text>
-      </MenuItem>
-    </Link>
-  )
-}
+export default Navbar;

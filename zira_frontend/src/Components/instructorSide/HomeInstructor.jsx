@@ -1,11 +1,27 @@
-import React from 'react'
+import React from "react";
+import { Box, Flex} from "@chakra-ui/react";
+import SideBarIns from "./SideBarIns";
 
-const HomeInstructor = () => {
+export default function HomeInstructor() {
   return (
-    <div>
-      
-    </div>
-  )
-}
+    <Box as="section" bg="transparent" minH="100vh">
 
-export default HomeInstructor
+      {/* SideBarIns */}
+      <SideBarIns />
+
+      <Flex
+        as="header"
+        align="center"
+        w="full"
+        px="4"
+        d={{ base: "flex", md: "none" }}
+        bg="white"
+        justifyContent={{ base: "space-between", md: "flex-end" }}
+        boxShadow="lg"
+        h="12"
+      >
+      </Flex>
+
+    </Box>
+  );
+}
