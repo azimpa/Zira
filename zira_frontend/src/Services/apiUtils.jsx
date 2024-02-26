@@ -21,3 +21,14 @@ export const fetchSingleUser = async (user_id) => {
         console.log(error);
     }
 };
+
+export const fetchCourses = async () => {
+    try {
+        const response = await api.get(
+            `${import.meta.env.VITE_APP_BASE_URL}/instructor/courses`
+        );
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}

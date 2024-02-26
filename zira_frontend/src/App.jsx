@@ -6,6 +6,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import HomeUser from './Components/userSide/HomeUser';
 import SignupUser from './Components/userSide/SignupUser';
 import LoginUser from './Components/userSide/LoginUser';
+import { UserRoute } from './Components/PrivateRoute/PrivateRoute';
+import CourseMain from './Components/userSide/CourseMain';
 import LoginAdmin from './Components/adminSide/LoginAdmin';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 import HomeAdmin from './Components/adminSide/HomeAdmin';
@@ -17,6 +19,7 @@ import LoginInstructor from './Components/instructorSide/LoginInstructor';
 import { InstructorRoute } from './Components/PrivateRoute/PrivateRoute';
 import HomeInstructor from './Components/instructorSide/HomeInstructor';
 import CourseInstructor from './Components/instructorSide/CourseInstructor';
+import ProfileInstructor from './Components/instructorSide/ProfileInstructor';
 
 
 
@@ -29,6 +32,7 @@ function App() {
             <Route path='/' element={<HomeUser />} />
             <Route path='/register' element={<SignupUser />} />
             <Route path='/login' element={<LoginUser />} />
+            <Route path='/coursemain' element={<UserRoute><CourseMain /></UserRoute>} />
             <Route path='/loginadmin' element={<LoginAdmin />} />
             <Route path='/homeadmin' element={<PrivateRoute><HomeAdmin /></PrivateRoute>} />
             <Route path='/usersadmin' element={<PrivateRoute><UsersList /></PrivateRoute>} />
@@ -37,7 +41,8 @@ function App() {
             <Route path='/registerinstructor' element={<RegisterInstructor />} />
             <Route path='/logininstructor' element={<LoginInstructor />} />
             <Route path='/homeinstructor' element={<InstructorRoute><HomeInstructor /></InstructorRoute>} />
-            <Route path='/courseinstructor' element={<InstructorRoute><CourseInstructor/></InstructorRoute>}/>
+            <Route path='/courseinstructor' element={<InstructorRoute><CourseInstructor /></InstructorRoute>} />
+            <Route path='/profileinstructor' element={<InstructorRoute><ProfileInstructor /></InstructorRoute>} />
           </Routes>
         </BrowserRouter>
       </Provider>

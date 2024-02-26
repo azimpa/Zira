@@ -1,6 +1,7 @@
 import React from 'react'
 import NavBar from './NavBar'
 import Hero from './Hero'
+import CardHome from './CardHome'
 import Footer from './Footer'
 
 const HomeUser = () => {
@@ -8,6 +9,7 @@ const HomeUser = () => {
     <>
       <NavBar />
       <Hero />
+      <CardHome/>
       <Footer/>
     </>
   )

@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   Avatar,
   Box,
@@ -22,6 +23,8 @@ import { useDispatch } from "react-redux";
 import { logoutUser } from "../../Redux/userActions";
 
 const SideBarIns = () => {
+  const instructor = useSelector((state) => state.user);
+  console.log(instructor, "instructor details on sidebar")
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -73,13 +76,16 @@ const SideBarIns = () => {
               <Avatar size={"sm"} name="Asim" src="https://avatars2.githubusercontent.com/u/37842853?v=4" />
             </MenuButton>
             <MenuList fontSize={15} zIndex={5555}>
-              <MenuItem as={Link} to="#">
+            <MenuItem fontWeight="bold" textAlign="center" justifyContent="center">
+                {instructor.user.name}
+              </MenuItem>
+              <MenuItem  onClick={() => navigate("/profileinstructor")} textAlign="center" justifyContent="center">
                 My profile
               </MenuItem>
-              <MenuItem as={Link} to="#">
+              <MenuItem as={Link} to="#" textAlign="center" justifyContent="center">
                 Change password
               </MenuItem>
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              <MenuItem onClick={handleLogout} textAlign="center" justifyContent="center">Logout</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
